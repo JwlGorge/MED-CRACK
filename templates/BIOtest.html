@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Biology Mock Test</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #96c083 0%, #4e9a4a 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-info h1 {
+            color: #136623;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .test-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .timer-section {
+            text-align: center;
+        }
+
+        .timer {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1c2f13;
+            margin-bottom: 0.5rem;
+        }
+
+        .timer-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+        }
+
+        /* Question Panel */
+        .question-panel {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .question-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #136623;
+        }
+
+        .question-type {
+            background: #4caf50;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background: #e3f2fd;
+            border-color: #136623;
+        }
+
+        .option.selected {
+            background: #e3f2fd;
+            border-color: #136623;
+            color: #136623;
+        }
+
+        .option.correct {
+            background: #e8f5e8;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+
+        .option-label {
+            font-weight: bold;
+            margin-right: 1rem;
+            min-width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #136623;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .option.selected .option-label {
+            background: #136623;
+        }
+
+        .option.correct .option-label {
+            background: #4caf50;
+        }
+
+        .option.incorrect .option-label {
+            background: #f44336;
+        }
+
+        /* Navigation Buttons */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .nav-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-previous {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .btn-previous:hover:not(:disabled) {
+            background: #e0e0e0;
+        }
+
+        .btn-next {
+            background: #136623;
+            color: white;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            background: #1565c0;
+        }
+
+        .btn-submit {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #45a049;
+        }
+
+        /* Side Panel */
+        .side-panel {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-section {
+            margin-bottom: 2rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #136623;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            background: #4caf50;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #136623;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.2rem;
+        }
+
+        /* Question Grid */
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+        }
+
+        .question-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .question-dot.unanswered {
+            background: #f5f5f5;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+
+        .question-dot.answered {
+            background: #4caf50;
+            color: white;
+        }
+
+        .question-dot.current {
+            background: #136623;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .question-dot:hover {
+            transform: scale(1.05);
+        }
+
+        /* Results Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .modal h2 {
+            color: #136623;
+            margin-bottom: 1rem;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin: 1rem 0;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .result-item {
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .result-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .correct { color: #4caf50; }
+        .incorrect { color: #f44336; }
+        .unattempted { color: #ff9800; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .question-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="test-info">
+                <h1>NEET Biology Mock Test</h1>
+                <p>45 Questions • 45 Minutes • Full Syllabus</p>
+            </div>
+            <div class="timer-section">
+                <div class="timer" id="timer">45:00</div>
+                <div class="timer-label">Time Remaining</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="question-panel">
+                <div class="question-header">
+                    <div class="question-number" id="questionNumber">Question 1 of 45</div>
+                    <div class="question-type">Single Correct</div>
+                </div>
+
+                <div class="question-text" id="questionText">
+                    Which of the following is the powerhouse of the cell?
+                </div>
+
+                <div class="options" id="optionsContainer">
+                    <div class="option" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">Nucleus</div>
+                    </div>
+                    <div class="option" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">Mitochondria</div>
+                    </div>
+                    <div class="option" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">Ribosome</div>
+                    </div>
+                    <div class="option" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">Endoplasmic Reticulum</div>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="nav-btn btn-previous" id="prevBtn" onclick="previousQuestion()">Previous</button>
+                    <button class="nav-btn btn-next" id="nextBtn" onclick="nextQuestion()">Next</button>
+                    <button class="nav-btn btn-submit" id="submitBtn" onclick="submitTest()" style="display: none;">Submit Test</button>
+                </div>
+            </div>
+
+            <div class="side-panel">
+                <div class="panel-section">
+                    <div class="panel-title">Progress</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 2.22%"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">1 of 45 answered</div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number" id="answeredCount">0</div>
+                            <div class="stat-label">Answered</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="unansweredCount">45</div>
+                            <div class="stat-label">Remaining</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="panel-title">Question Palette</div>
+                    <div class="question-grid" id="questionGrid">
+                        <!-- Generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div class="modal" id="resultsModal">
+        <div class="modal-content">
+            <h2>Test Completed!</h2>
+            <div class="score-display" id="scoreDisplay">24/45</div>
+            <div class="result-stats">
+                <div class="result-item">
+                    <div class="result-number correct" id="correctCount">24</div>
+                    <div>Correct</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-number incorrect" id="incorrectCount">16</div>
+                    <div>Incorrect</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-number unattempted" id="unattemptedCount">5</div>
+                    <div>Unattempted</div>
+                </div>
+            </div>
+            <button class="nav-btn btn-submit" onclick="closeResults()">Review Answers</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample NEET Biology Questions
+        const questions = [
+            {
+                question: "Which of the following is the powerhouse of the cell?",
+                options: ["Nucleus", "Mitochondria", "Ribosome", "Endoplasmic Reticulum"],
+                correct: "B"
+            },
+            {
+                question: "The process of photosynthesis occurs in which part of the plant cell?",
+                options: ["Mitochondria", "Nucleus", "Chloroplast", "Vacuole"],
+                correct: "C"
+            },
+            {
+                question: "DNA replication occurs during which phase of the cell cycle?",
+                options: ["G1 phase", "S phase", "G2 phase", "M phase"],
+                correct: "B"
+            },
+            {
+                question: "Which enzyme is responsible for joining Okazaki fragments during DNA replication?",
+                options: ["DNA helicase", "DNA polymerase", "DNA ligase", "DNA primase"],
+                correct: "C"
+            },
+            {
+                question: "The theory of evolution by natural selection was proposed by:",
+                options: ["Gregor Mendel", "Charles Darwin", "Louis Pasteur", "Robert Koch"],
+                correct: "B"
+            },
+            {
+                question: "Which of the following is not a characteristic of prokaryotes?",
+                options: ["Absence of nucleus", "Presence of ribosomes", "Presence of mitochondria", "Cell wall made of peptidoglycan"],
+                correct: "C"
+            },
+            {
+                question: "The site of protein synthesis in a cell is:",
+                options: ["Nucleus", "Mitochondria", "Ribosome", "Golgi apparatus"],
+                correct: "C"
+            },
+            {
+                question: "Which hormone regulates blood glucose levels?",
+                options: ["Thyroxine", "Insulin", "Adrenaline", "Growth hormone"],
+                correct: "B"
+            },
+            {
+                question: "The Calvin cycle occurs in which part of the chloroplast?",
+                options: ["Thylakoid membrane", "Stroma", "Granum", "Outer membrane"],
+                correct: "B"
+            },
+            {
+                question: "Which of the following is the correct sequence in the central dogma of molecular biology?",
+                options: ["RNA → DNA → Protein", "DNA → RNA → Protein", "Protein → RNA → DNA", "DNA → Protein → RNA"],
+                correct: "B"
+            }
+        ];
+
+        // Add more questions to reach 45
+        for (let i = 10; i < 45; i++) {
+            questions.push({
+                question: `Sample Biology Question ${i + 1}: Which biological concept is being tested here?`,
+                options: [`Option A for question ${i + 1}`, `Option B for question ${i + 1}`, `Option C for question ${i + 1}`, `Option D for question ${i + 1}`],
+                correct: ["A", "B", "C", "D"][Math.floor(Math.random() * 4)]
+            });
+        }
+
+        let currentQuestion = 0;
+        let userAnswers = {};
+        let timeRemaining = 45 * 60; // 45 minutes in seconds
+        let timerInterval;
+
+        // Initialize the test
+        function initializeTest() {
+            generateQuestionGrid();
+            displayQuestion();
+            startTimer();
+            updateStats();
+        }
+
+        // Generate question palette
+        function generateQuestionGrid() {
+            const grid = document.getElementById('questionGrid');
+            grid.innerHTML = '';
+            for (let i = 0; i < questions.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'question-dot unanswered';
+                dot.textContent = i + 1;
+                dot.onclick = () => goToQuestion(i);
+                grid.appendChild(dot);
+            }
+        }
+
+        // Display current question
+        function displayQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('questionText').textContent = question.question;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.setAttribute('data-option', String.fromCharCode(65 + index));
+                
+                optionElement.innerHTML = `
+                    <div class="option-label">${String.fromCharCode(65 + index)}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.onclick = () => selectOption(String.fromCharCode(65 + index));
+                optionsContainer.appendChild(optionElement);
+            });
+
+            // Restore selected answer
+            if (userAnswers[currentQuestion]) {
+                const selectedOption = document.querySelector(`[data-option="${userAnswers[currentQuestion]}"]`);
+                if (selectedOption) {
+                    selectedOption.classList.add('selected');
+                }
+            }
+
+            updateNavigation();
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(option) {
+            // Remove previous selection
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selection to clicked option
+            const selectedOption = document.querySelector(`[data-option="${option}"]`);
+            selectedOption.classList.add('selected');
+            
+            // Store answer
+            userAnswers[currentQuestion] = option;
+            updateStats();
+            updateQuestionGrid();
+        }
+
+        // Navigation functions
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+            }
+        }
+
+        function goToQuestion(index) {
+            currentQuestion = index;
+            displayQuestion();
+        }
+
+        // Update navigation buttons
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const dots = document.querySelectorAll('.question-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.remove('current', 'answered', 'unanswered');
+                
+                if (index === currentQuestion) {
+                    dot.classList.add('current');
+                } else if (userAnswers[index]) {
+                    dot.classList.add('answered');
+                } else {
+                    dot.classList.add('unanswered');
+                }
+            });
+        }
+
+        // Update statistics
+        function updateStats() {
+            const answered = Object.keys(userAnswers).length;
+            const remaining = questions.length - answered;
+            const progressPercent = (answered / questions.length) * 100;
+
+            document.getElementById('answeredCount').textContent = answered;
+            document.getElementById('unansweredCount').textContent = remaining;
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+            document.getElementById('progressText').textContent = `${answered} of ${questions.length} answered`;
+        }
+
+        // Timer functionality
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Submit test
+        function submitTest() {
+            clearInterval(timerInterval);
+            
+            let correct = 0;
+            let incorrect = 0;
+            let unattempted = 0;
+
+            questions.forEach((question, index) => {
+                if (userAnswers[index]) {
+                    if (userAnswers[index] === question.correct) {
+                        correct++;
+                    } else {
+                        incorrect++;
+                    }
+                } else {
+                    unattempted++;
+                }
+            });
+
+            // Display results
+            document.getElementById('scoreDisplay').textContent = `${correct}/${questions.length}`;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('incorrectCount').textContent = incorrect;
+            document.getElementById('unattemptedCount').textContent = unattempted;
+            document.getElementById('resultsModal').style.display = 'block';
+        }
+
+        function closeResults() {
+            document.getElementById('resultsModal').style.display = 'none';
+            // Show answers in the question panel
+            showAnswers();
+        }
+
+        function showAnswers() {
+            // Disable further selection and show correct answers
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                const optionLetter = opt.getAttribute('data-option');
+                const correctAnswer = questions[currentQuestion].correct;
+                
+                if (optionLetter === correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (opt.classList.contains('selected')) {
+                    opt.classList.add('incorrect');
+                }
+            });
+        }
+
+        // Initialize the test when page loads
+        window.onload = initializeTest;
+    </script>
+</body>
+</html>

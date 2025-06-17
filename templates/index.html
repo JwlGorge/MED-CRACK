@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MED-CRACK :Pave your Dream</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">MED-CRACK</a>
+            <ul class="nav-links">
+                <li><a href="#problems">Problems</a></li>
+                <li><a href="#contest">Contest</a></li>
+                <li><a href="#discuss">Discuss</a></li>
+                <li><a href="#interview">Interview</a></li>
+                <li><a href="#premium">Premium</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-outline">Sign In</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Boost your Knowledge</h1>
+                <p>Practice problems, prepare for Tests, and improve your Knowledge</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary btn-hero">Start Tests</a>
+                    <a href="#" class="btn btn-outline btn-hero">View Problems</a>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">2,847</div>
+                        <div class="stat-label">Problems</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1.2M+</div>
+                        <div class="stat-label">Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Topics</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Recommendations</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-content">
+            <div class="container">
+                <div class="section">
+                    <h2>Choose Your Challenge</h2>
+                    <p>Select from our curated collection of problems across different difficulty levels</p>
+                    
+                    <div class="categories">
+                        <div class="category-card">
+                            <div class="category-icon">🌳</div>
+                            <div class="category-title">Biology</div>
+                            <div class="category-count">486 Problems</div>
+                            <div class="category-difficulty">
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot"></div>
+                                <div class="difficulty-dot"></div>
+                            </div>
+                            <div class="hero-buttons">
+                                <a href="/test" class="btn btn-primary btn-hero">Start Tests</a>
+                            </div>
+                        </div>
+                        
+                        <div class="category-card">
+                            <div class="category-icon">💡</div>
+                            <div class="category-title">Physics</div>
+                            <div class="category-count">312 Problems</div>
+                            <div class="category-difficulty">
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="category-card">
+                            <div class="category-icon">⚡</div>
+                            <div class="category-title">Chemistry</div>
+                            <div class="category-count">198 Problems</div>
+                            <div class="category-difficulty">
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot active"></div>
+                                <div class="difficulty-dot active"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="featured-problem">
+                    <div class="problem-header">
+                        <div class="problem-title">Human reproduction</div>
+                        <div class="difficulty-badge">Easy</div>
+                    </div>
+                    <div class="problem-description">
+                        
+                    </div>
+                    <div class="problem-tags">
+                        <span class="tag">Human Reproduction</span>
+                        <span class="tag">uterus</span>
+                        <span class="tag">Contraception</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <a href="#">Problems</a>
+                    <a href="#">Contest</a>
+                    <a href="#">Interview</a>
+                    <a href="#">Premium</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <a href="#">Discussion</a>
+                    <a href="#">Discord</a>
+                    <a href="#">Reddit</a>
+                    <a href="#">Twitter</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="#">Help Center</a>
+                    <a href="#">Bug Report</a>
+                    <a href="#">Feedback</a>
+                    <a href="#">API</a>
+                </div>
+            </div>
+            <p>&copy; 2025 CodeMaster. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects to category cards
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Animate stats on scroll
+        const animateStats = () => {
+            const stats = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalValue = target.textContent;
+                        let currentValue = 0;
+                        const increment = finalValue.includes('M') ? 50000 : 
+                                        finalValue.includes('K') ? 100 : 
+                                        parseInt(finalValue.replace(/[^0-9]/g, '')) / 50;
+                        
+                        const timer = setInterval(() => {
+                            currentValue += increment;
+                            if (currentValue >= parseInt(finalValue.replace(/[^0-9]/g, ''))) {
+                                target.textContent = finalValue;
+                                clearInterval(timer);
+                            } else {
+                                if (finalValue.includes('M')) {
+                                    target.textContent = (currentValue / 1000000).toFixed(1) + 'M+';
+                                } else if (finalValue.includes('K')) {
+                                    target.textContent = (currentValue / 1000).toFixed(0) + 'K+';
+                                } else {
+                                    target.textContent = Math.floor(currentValue);
+                                }
+                            }
+                        }, 30);
+                        
+                        observer.unobserve(target);
+                    }
+                });
+            });
+            
+            stats.forEach(stat => observer.observe(stat));
+        };
+
+        // Initialize animations when page loads
+        window.addEventListener('load', animateStats);
+    </script>
+</body>
+</html>
