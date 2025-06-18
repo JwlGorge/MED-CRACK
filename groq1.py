@@ -69,7 +69,7 @@ def main():
         session.commit()
 
         print(f"Updated ID {qid} with answer: {answer}")
-        time.sleep(1)  # avoid hitting rate limits
+        time.sleep(2)  # avoid hitting rate limits
 
 
     session.close()

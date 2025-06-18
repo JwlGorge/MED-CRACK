@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import SessionLocal
 from models import Question, student
+from pydantic import BaseModel
+
 
 app = FastAPI()
 
@@ -42,8 +44,14 @@ async def testPage(request: Request):
     return templates.TemplateResponse("BIOtest.html", {"request": request})
 
 # Signup Endpoint
-@app.put("/signup")
-def signup(username: str, password: str, db: Session = Depends(get_db)):
+class SignupRequest(BaseModel):
+    username: str
+    password: str
+@app.post("/signup")
+def signup(request: SignupRequest, db: Session = Depends(get_db)):
+    username = request.username
+    password = request.password
+
     existing_user = db.query(student).filter(student.username == username).first()
     
     if existing_user:
@@ -55,12 +63,15 @@ def signup(username: str, password: str, db: Session = Depends(get_db)):
     db.refresh(new_user)
 
     return {"message": "User created successfully", "user_id": new_user.id}
-
 # Login Endpoint
+class SignupRequest(BaseModel):
+    username: str
+    password: str
 @app.get("/login")
-def login(username: str, password: str, db: Session = Depends(get_db)):
+def login(request: SignupRequest, db: Session = Depends(get_db)):
+    username = request.username
+    password = request.password
     user = db.query(student).filter(student.username == username).first()
-    
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
