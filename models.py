@@ -15,4 +15,14 @@ class Question(Base):
     Option_3 = Column(Text)
     Option_4 = Column(Text)
     Toughness=Column(Text)
-    Correct_option = Column(Text)
+    Correct_option = Column(String(2))  # VARCHAR(10)
+
+
+class student(Base):
+    __tablename__='student'
+    id=Column(Integer,primary_key=True,index=True)
+    username=Column(Text)
+    password=Column(Text)
+    number=Column(Integer)
+    duration=Column(Integer,default=2)#1 year 2 year and 3 year plan are we providing
+    
