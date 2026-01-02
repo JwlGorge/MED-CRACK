@@ -201,6 +201,7 @@ export default function TopicQuestionsPage() {
         setLoading(true)
         setLoading(true)
         // Using apiFetch eliminates the manual token handling and hardcoded URL
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const rawQuestions = await apiFetch<any[]>(`/questions/${topicId}`)
 
         if (!Array.isArray(rawQuestions)) return;

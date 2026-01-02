@@ -4,12 +4,8 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { apiFetch } from "@/lib/api"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
-import { ArrowLeft, ArrowRight, CheckCircle, Timer, X, Flag, HelpCircle } from "lucide-react"
+import { ArrowLeft, Timer, X, Flag } from "lucide-react"
 
 /* ================= TYPES ================= */
 
@@ -223,9 +219,8 @@ export default function QuizPage() {
     try {
       const token = localStorage.getItem("token")
       if (token) {
-        await fetch("http://localhost:8000/api/report-error", {
+        await apiFetch("/api/report-error", {
           method: "POST",
-          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
           body: JSON.stringify({ questionId: String(currentQ.id), subject: currentQ.subject || "Unknown", quizId: quiz.id })
         })
         setFlaggedQuestions(prev => new Set([...prev, currentQ.id]))
@@ -280,9 +275,8 @@ export default function QuizPage() {
           isCorrect: r.isCorrect || false
         }))
 
-        await fetch("http://localhost:8000/api/quiz/submit", {
+        await apiFetch("/api/quiz/submit", {
           method: "POST",
-          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
           body: JSON.stringify({
             quizId: quiz.id,
             difficulty: quiz.difficulty,
