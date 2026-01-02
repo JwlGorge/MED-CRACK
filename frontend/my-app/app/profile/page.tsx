@@ -4,17 +4,13 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 import { Progress } from "@/components/ui/progress"
 import {
-  Bell,
-  User,
   MessageCircle,
   Star,
   Calendar,
   List,
   FileText,
-  Users,
   Target,
   ArrowLeft,
   Award,
@@ -49,7 +45,6 @@ interface ProfileData {
 }
 
 function NavigationHeader() {
-  const router = useRouter()
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 py-4">
@@ -74,6 +69,7 @@ function NavigationHeader() {
 
 function ProfileSidebar({ data }: { data: ProfileData }) {
   const router = useRouter()
+
   const handleLogout = () => {
     localStorage.removeItem("token")
     router.push("/auth")
@@ -128,8 +124,8 @@ function StatsCircle({ data }: { data: ProfileData }) {
   const totalSolved = (problemStats?.easy?.solved || 0) + (problemStats?.medium?.solved || 0) + (problemStats?.hard?.solved || 0)
   const totalEasy = problemStats?.easy?.total || 100
   const totalMedium = problemStats?.medium?.total || 100
+
   const totalHard = problemStats?.hard?.total || 100
-  const totalProblems = totalEasy + totalMedium + totalHard
 
   const acceptance = totalSubmissions > 0 ? (totalSolved / totalSubmissions) * 100 : 0
 

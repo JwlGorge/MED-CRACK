@@ -4,7 +4,6 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Alert } from "@/components/ui/alert"
 import { Eye, EyeOff, BookOpen, ArrowLeft, Loader2, CheckCircle, AlertCircle } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
@@ -63,6 +62,7 @@ export default function AuthPage() {
         localStorage.setItem("token", loginData.access_token)
         setTimeout(() => router.push("/home"), 800)
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Auth Error:", err)
       setError(err.message || "Authentication failed")

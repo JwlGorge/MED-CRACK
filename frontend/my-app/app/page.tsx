@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
-import { ArrowRight, BookOpen, CheckCircle, Trophy, Users, Zap } from "lucide-react"
+import { ArrowRight, BookOpen, CheckCircle, Users, Zap } from "lucide-react"
 
 // Types for API responses
 interface SubjectStat {
@@ -26,7 +26,7 @@ export default function LandingPage() {
         setSubjectStats(data.subjectStats)
         setTotalQuestions(data.totalQuestions)
         setActiveUsers(data.activeUsers || 103)
-      } catch (e) {
+      } catch {
         // fallback demo data
         setSubjectStats([
           { subject: "Biology", questionCount: 1200 },
