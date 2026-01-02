@@ -1,0 +1,9 @@
+name: New prompt
+version: 0.0.1
+schema: v1
+prompts:
+  - name: Write Code Only
+    description: Generate optimized and clean code only, minimal explanations
+    prompt: Write only the complete and correct code required to solve the problem described below. 
+      Avoid comments, explanations, or unnecessary output.
+      The code must be minimal, efficient, and production-grade

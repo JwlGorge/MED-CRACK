@@ -1,0 +1,40 @@
+                 ┌───────────┐
+                 │  Landing  │  ("/") [optional - if public]
+                 └────┬──────┘
+                      │ (if not logged in)
+          ┌───────────▼───────────┐
+          │     Authentication    │
+          │ ┌────────┐ ┌───────┐  │
+          │ │ SignUp │ │ Login │  │  "/auth"
+          │ └────────┘ └───────┘  │
+          └───────────┬────────── ┘
+                      │ (on login)
+               ┌──────▼───────┐
+               │   Home       │  ("/home")
+               └──────┬───────┘
+                      │
+          ┌───────────▼───────────┐
+          │      Quiz Page        │  ("/quiz")
+          │  - Select Subject     │
+          │  - Select Topic       │
+          │  - Start Quiz         │
+          └───────┬──────────────┘
+                  │
+          ┌───────▼──────────────┐
+          │   Quiz in Progress   │ (Dynamic) ("/quiz/:subject/:topic")
+          │ - Timer              │
+          │ - MCQs               │
+          │ - Submit             │
+          └───────┬──────────────┘
+                  │
+         ┌────────▼────────┐
+         │   Quiz Result   │  ("/result") [optional]
+         │  - Score        │
+         │  - Review       │
+         └───────┬────────┘
+                 │
+          ┌──────▼───────┐
+          │   Profile    │  ("/profile")
+          │ - Progress │
+          │ - Attempts   │
+          └──────────────┘
