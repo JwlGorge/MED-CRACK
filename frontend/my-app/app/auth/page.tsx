@@ -9,7 +9,9 @@ import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { apiFetch } from "@/lib/api"
 
-export default function AuthPage() {
+import { Suspense } from "react"
+
+function AuthPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -187,5 +189,17 @@ export default function AuthPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+      </div>
+    }>
+      <AuthPageContent />
+    </Suspense>
   )
 }
