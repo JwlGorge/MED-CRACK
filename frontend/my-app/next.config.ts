@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true, // Recommended for development & production
+  devIndicators: false,
 
   // Rewrites to proxy Next.js requests to your FastAPI backend
   async rewrites() {
