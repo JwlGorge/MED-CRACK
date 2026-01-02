@@ -13,12 +13,10 @@ import {
   ChevronDown,
   ChevronUp,
   CheckCircle,
-  BookOpen,
   Timer,
   Users,
   BarChart3,
   ArrowLeft,
-  Target,
   RefreshCcw,
 } from "lucide-react"
 import Link from "next/link"

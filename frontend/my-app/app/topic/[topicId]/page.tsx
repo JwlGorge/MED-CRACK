@@ -15,7 +15,6 @@ import {
   Brain,
   Stethoscope,
   CheckCircle,
-  Play,
   ArrowRight,
 } from "lucide-react"
 import Link from "next/link"
@@ -161,7 +160,7 @@ function DifficultySection({
             <div className="text-center py-8">
               <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-3" />
               <p className="text-gray-900 font-medium">All clear!</p>
-              <p className="text-sm text-gray-500">You've mastered this difficulty level.</p>
+              <p className="text-sm text-gray-500">You&apos;ve mastered this difficulty level.</p>
             </div>
           )}
         </div>
@@ -200,18 +199,13 @@ export default function TopicQuestionsPage() {
         }
 
         setLoading(true)
-        const response = await fetch(`http://localhost:8000/questions/${topicId}`, {
-          headers: { "Authorization": `Bearer ${token}` }
-        })
+        setLoading(true)
+        // Using apiFetch eliminates the manual token handling and hardcoded URL
+        const rawQuestions = await apiFetch<any[]>(`/questions/${topicId}`)
 
-        if (!response.ok) {
-          if (response.status === 401 || response.status === 403) router.push("/auth");
-          return;
-        }
-
-        const rawQuestions = await response.json()
         if (!Array.isArray(rawQuestions)) return;
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const questions: Question[] = rawQuestions.map((q: any) => ({
           id: String(q.id),
           question: q.question,
@@ -264,7 +258,7 @@ export default function TopicQuestionsPage() {
     }
 
     if (topicId) fetchQuestions()
-  }, [topicId, completedQuizzes])
+  }, [topicId, completedQuizzes, router])
 
   const handleStartQuiz = (quizId: string) => {
     const quiz = quizzes.find(q => q.id === quizId)
