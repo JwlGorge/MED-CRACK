@@ -6,6 +6,7 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 import os
+from typing import Optional
 
 SECRET_KEY = os.getenv("SECRET_KEY") or "your_secret_key" # Warn: Change this in production!
 ALGORITHM = "HS256"
@@ -45,3 +46,9 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Security(securi
     if payload is None:
         raise HTTPException(status_code=401, detail="Invalid token")
     return payload
+
+def get_current_user_optional(credentials: Optional[HTTPAuthorizationCredentials] = Security(security)):
+    if not credentials:
+        return None
+    token = credentials.credentials
+    return decode_token(token)

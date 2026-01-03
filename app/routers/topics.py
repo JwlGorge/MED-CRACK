@@ -5,7 +5,7 @@ from pydantic import BaseModel
 import random
 from ..database import get_db
 from ..models import Topics, BiologyQuestion, PhysicsQuestion, ChemistryQuestion, Student, Attempt
-from ..dependencies import get_current_user
+from ..dependencies import get_current_user, get_current_user_optional
 
 router = APIRouter(tags=["Topics"])
 
@@ -78,41 +78,57 @@ def get_topics(db: Session = Depends(get_db)):
         return []
 
 @router.get("/questions/{topic}", response_model=List[GetQuestion])
-def get_subject_questions(topic: str, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+def get_subject_questions(topic: str, db: Session = Depends(get_db), current_user: Optional[dict] = Depends(get_current_user_optional)):
     try:
-        user = db.query(Student).filter(Student.username == current_user['sub']).first()
+        user = None
         attempted_ids = []
-        if user:
-            subject_name = ""
-            if topic.startswith("B"): subject_name = "Biology"
-            elif topic.startswith("P"): subject_name = "Physics"
-            elif topic.startswith("C"): subject_name = "Chemistry"
-            
-            attempts = db.query(Attempt).filter(Attempt.user_id == user.id, Attempt.subject == subject_name).all()
-            attempted_ids = [a.question_id for a in attempts]
+        
+        # If user is logged in, filter out attempted questions
+        if current_user:
+            user = db.query(Student).filter(Student.username == current_user['sub']).first()
+            if user:
+                subject_name = ""
+                if topic.startswith("B"): subject_name = "Biology"
+                elif topic.startswith("P"): subject_name = "Physics"
+                elif topic.startswith("C"): subject_name = "Chemistry"
+                
+                attempts = db.query(Attempt).filter(Attempt.user_id == user.id, Attempt.subject == subject_name).all()
+                attempted_ids = [a.question_id for a in attempts]
 
         questions_data: List[GetQuestion] = []
+        
+        # Helper to simplify query logic
+        def get_qs(model, subject, limit=None):
+            query = db.query(model).filter(model.topic == topic)
+            if attempted_ids:
+                query = query.filter(model.id.notin_(attempted_ids))
+            if limit:
+                return query.limit(limit).all()
+            return query.all()
+
+        limit = 5 if user is None else None # Preview limit for guests
 
         # Biology
-        bio_q = db.query(BiologyQuestion).filter(BiologyQuestion.topic == topic).filter(BiologyQuestion.id.notin_(attempted_ids)).all()
+        bio_q = get_qs(BiologyQuestion, "Biology", limit)
         for q in bio_q:
             questions_data.append(GetQuestion(id=q.id, question=q.Question, options=[q.Option_1, q.Option_2, q.Option_3, q.Option_4], correct=q.Correct_option or 0, toughness=q.Toughness, subject="Biology"))
 
         # Physics
-        phy_q = db.query(PhysicsQuestion).filter(PhysicsQuestion.topic == topic).filter(PhysicsQuestion.id.notin_(attempted_ids)).all()
+        phy_q = get_qs(PhysicsQuestion, "Physics", limit)
         for q in phy_q:
             questions_data.append(GetQuestion(id=q.id, question=q.Question, options=[q.Option_1, q.Option_2, q.Option_3, q.Option_4], correct=q.Correct_option or 0, toughness=q.Toughness, subject="Physics"))
 
         # Chemistry
-        chem_q = db.query(ChemistryQuestion).filter(ChemistryQuestion.topic == topic).filter(ChemistryQuestion.id.notin_(attempted_ids)).all()
+        chem_q = get_qs(ChemistryQuestion, "Chemistry", limit)
         for q in chem_q:
              questions_data.append(GetQuestion(id=q.id, question=q.Question, options=[q.Option_1, q.Option_2, q.Option_3, q.Option_4], correct=q.Correct_option or 0, toughness=q.Toughness, subject="Chemistry"))
 
         if not questions_data:
-            # If all attempted or none exist, maybe return attempted ones to practice? 
-            # Or currently just raise 404
+            # If logged in and all done, 404 is okay. If guest and nothing found, 404 is okay.
             raise HTTPException(status_code=404, detail="No new questions found")
 
         return questions_data
     except Exception as e:
+        print(f"Error: {e}") 
+        # Fallback empty list if something major fails, or re-raise
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
