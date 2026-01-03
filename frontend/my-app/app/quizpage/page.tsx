@@ -179,6 +179,8 @@ export default function QuizPage() {
   const [showIncorrectFeedback, setShowIncorrectFeedback] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set())
+  // Track mistakes from the VERY FIRST submission attempt
+  const [firstAttemptMistakes, setFirstAttemptMistakes] = useState<any[] | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -243,6 +245,24 @@ export default function QuizPage() {
       }
     })
 
+    // Capture mistakes on the FIRST attempt only
+    if (firstAttemptMistakes === null) {
+      const initialMistakes = results
+        .filter(r => !r.isCorrect)
+        .map((r) => {
+          // Find original question because filter/map index might mismatch if not careful, 
+          // but here we map from 'results' which is full length.
+          // However, relying on quiz.questions.find is safer.
+          const originalQ = quiz.questions.find(q => q.id === r.questionId);
+          return {
+            questionId: String(r.questionId),
+            subject: originalQ?.subject || "Unknown",
+            isCorrect: false
+          }
+        });
+      setFirstAttemptMistakes(initialMistakes);
+    }
+
     if (results.some((a) => !a.isCorrect)) {
       setUserAnswers(results)
       setShowIncorrectFeedback(true)
@@ -275,6 +295,33 @@ export default function QuizPage() {
           isCorrect: r.isCorrect || false
         }))
 
+        // Use the captured first-attempt mistakes. 
+        // If they got everything right on first try, this will be empty (from the logic above).
+        // If captured is null (shouldn't happen due to logic above), fallback to empty.
+        const mistakesToSend = firstAttemptMistakes || [];
+        // Edge case: If they got 100% on first try, firstAttemptMistakes is set to [] above.
+        // If they failed first try, firstAttemptMistakes has items.
+        // On subsequent retries, firstAttemptMistakes is NOT updated (kept as is).
+
+        // Wait! logical race: setFirstAttemptMistakes is async. 
+        // But we calculated 'initialMistakes' locally in this closure. use that if first time.
+
+        let finalMistakes = firstAttemptMistakes;
+        if (finalMistakes === null) {
+          // This means this is the very first attempt AND it was perfect (since we passed the filtering check)
+          // Or we just calculated it. Let's recalculate locally to be safe or use the variable.
+          finalMistakes = results
+            .filter(r => !r.isCorrect)
+            .map(r => {
+              const originalQ = quiz.questions.find(q => q.id === Number(r.questionId));
+              return {
+                questionId: String(r.questionId),
+                subject: originalQ?.subject || "Unknown",
+                isCorrect: false
+              }
+            });
+        }
+
         await apiFetch("/api/quiz/submit", {
           method: "POST",
           body: JSON.stringify({
@@ -283,7 +330,8 @@ export default function QuizPage() {
             questionsCount: quiz.questions.length,
             correctCount: correctCount,
             timeSpent: timeElapsed,
-            results: submissionResults
+            results: submissionResults,
+            mistakes: finalMistakes
           })
         })
       } catch (e) { console.error("Failed to submit quiz stats", e) }

@@ -1,19 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 from datetime import datetime
 import random
 from ..database import get_db
-from ..models import Student, Attempt, ReportedError
-from ..dependencies import get_current_user
+from ..models import Student, Attempt, ReportedError, Weakarea
 
-router = APIRouter(prefix="/api", tags=["Quiz"])
-
-class QuestionResult(BaseModel):
-    questionId: str
-    subject: str
-    isCorrect: bool
+# ... (imports)
 
 class QuizSubmissionRequest(BaseModel):
     quizId: str
@@ -22,6 +16,7 @@ class QuizSubmissionRequest(BaseModel):
     correctCount: int
     timeSpent: int
     results: List[QuestionResult]
+    mistakes: Optional[List[QuestionResult]] = []
 
 @router.post("/quiz/submit")
 def submit_quiz(submission: QuizSubmissionRequest, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
@@ -47,6 +42,7 @@ def submit_quiz(submission: QuizSubmissionRequest, db: Session = Depends(get_db)
             user.experience_points -= (user.next_level_points or 1000)
             user.next_level_points = int((user.next_level_points or 1000) * 1.5)
             
+        # Record attempts
         for result in submission.results:
             if result.isCorrect:
                 attempt = Attempt(
@@ -58,12 +54,23 @@ def submit_quiz(submission: QuizSubmissionRequest, db: Session = Depends(get_db)
                     submitted_at=datetime.utcnow()
                 )
                 db.add(attempt)
+
+        # Record Weak Areas (Mistakes)
+        for mistake in submission.mistakes:
+            # Avoid duplicates if desired, or just log every mistake
+            weak_entry = Weakarea(
+                user_id=user.id,
+                subject=mistake.subject,
+                question_id=int(mistake.questionId) if mistake.questionId.isdigit() else 0
+            )
+            db.add(weak_entry)
         
         db.commit()
         db.refresh(user)
         return {"message": "Submission recorded", "xp_earned": xp_gain}
     except Exception as e:
         db.rollback()
+        print(f"Error submitting quiz: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 class ReportErrorRequest(BaseModel):

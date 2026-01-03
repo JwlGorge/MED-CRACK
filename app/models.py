@@ -104,3 +104,11 @@ class Attempt(Base):
     is_correct = Column(Boolean, default=False)
     submitted_at = Column(DateTime) # timestamp
     # columns to eventually remove/ignore: time_taken, accuracy, submitted, details
+
+
+class Weakarea(Base):
+    __tablename__="weakarea"
+    id=Column(Integer,primary_key=True,autoincrement=True)
+    user_id=Column(Integer)
+    subject=Column(Text)
+    question_id=Column(Integer)
