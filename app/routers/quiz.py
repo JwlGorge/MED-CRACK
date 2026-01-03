@@ -6,6 +6,7 @@ from datetime import datetime
 import random
 from ..database import get_db
 from ..models import Student, Attempt, ReportedError, Weakarea
+from ..dependencies import get_current_user
 
 # ... (imports)
 
