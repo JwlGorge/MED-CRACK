@@ -9,6 +9,11 @@ from ..models import Student, Attempt, ReportedError, Weakarea
 
 # ... (imports)
 
+class QuestionResult(BaseModel):
+    questionId: str
+    subject: str
+    isCorrect: bool
+
 class QuizSubmissionRequest(BaseModel):
     quizId: str
     difficulty: str
