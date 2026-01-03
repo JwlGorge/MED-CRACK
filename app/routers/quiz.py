@@ -9,6 +9,8 @@ from ..models import Student, Attempt, ReportedError, Weakarea
 
 # ... (imports)
 
+router = APIRouter(prefix="/api", tags=["Quiz"])
+
 class QuestionResult(BaseModel):
     questionId: str
     subject: str
