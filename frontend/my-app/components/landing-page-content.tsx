@@ -82,16 +82,20 @@ export default function LandingPageContent() {
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 mb-6 max-w-4xl mx-auto leading-tight">
-                            Master Your Medical <br />
-                            <span className="text-gray-400">Entrance With Precision.</span>
+                            Smart Practice for <br />
+                            NEET Aspirants
                         </h1>
 
-                        <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
-                            Minimalist, data-driven practice for serious aspirants.
-                            Track real-time progress, solve thousands of questions, and crack NEET with confidence.
+                        <p className="text-xl text-gray-500 mb-8 max-w-2xl mx-auto leading-relaxed">
+                            <span className="font-semibold text-gray-900">AI-generated questions that adapt to your weak areas.</span><br />
+                            Track real progress, practice high-impact problems, and focus where you lose marks.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+                        <p className="text-sm font-bold text-gray-900 tracking-widest uppercase mb-10">
+                            Minimalist. Data-driven. Built for serious preparation.
+                        </p>
+
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
                             <Button
                                 size="lg"
                                 className="bg-black text-white hover:bg-gray-800 rounded-full px-8 h-12 text-base shadow-lg hover:shadow-xl transition-all"
@@ -109,6 +113,8 @@ export default function LandingPageContent() {
                                 Explore Topics
                             </Button>
                         </div>
+
+
 
                         {/* Stats Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">

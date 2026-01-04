@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://med-cracker.com';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://medcrack.in';
 
     // These should ideally be fetched from your backend if dynamic
     const topics = ['biology', 'physics', 'chemistry', 'zoology', 'botany'];

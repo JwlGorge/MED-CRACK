@@ -17,7 +17,7 @@ export async function generateMetadata(
     title: `${title} Questions for NEET | Med-Cracker`,
     description: `Practice top-tier ${title} questions for the NEET medical entrance exam. Free quizzes, progress tracking, and detailed solutions.`,
     alternates: {
-      canonical: `https://med-cracker.com/topic/${topicId}`,
+      canonical: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://medcrack.in'}/topic/${topicId}`,
     },
     openGraph: {
       title: `${title} Practice Questions | Med-Cracker`,
