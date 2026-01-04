@@ -117,7 +117,7 @@ export default function LandingPageContent() {
 
 
                         {/* Stats Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-24">
                             {subjectStats.map((stat) => (
                                 <div key={stat.subject} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                                     <div className="text-xs font-bold tracking-wider text-gray-400 uppercase mb-2">{stat.subject}</div>
@@ -125,6 +125,51 @@ export default function LandingPageContent() {
                                     <div className="text-sm text-gray-500 font-medium">Questions Available</div>
                                 </div>
                             ))}
+                        </div>
+
+                        {/* Sample Questions for SEO */}
+                        <div className="max-w-3xl mx-auto text-left mb-20">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Practice High-Yield NEET Questions</h2>
+                            <div className="space-y-6">
+                                <div className="p-6 bg-gray-50 rounded-xl border border-gray-100">
+                                    <p className="font-medium text-gray-900 mb-3">Question: Which of the following occurs in meiosis but not in mitosis?</p>
+                                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600 mb-4">
+                                        <li>A) DNA replication</li>
+                                        <li>B) Crossing over</li>
+                                        <li>C) Cytokinesis</li>
+                                        <li>D) Chromosome condensation</li>
+                                    </ul>
+                                    <div className="bg-white p-3 rounded-lg border border-gray-100 text-sm">
+                                        <span className="font-bold text-green-600">Answer: B</span> — Crossing over is a key feature of meiosis I.
+                                    </div>
+                                </div>
+
+                                <div className="p-6 bg-gray-50 rounded-xl border border-gray-100">
+                                    <p className="font-medium text-gray-900 mb-3">Question: In plants, which tissue is responsible for water transport?</p>
+                                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600 mb-4">
+                                        <li>A) Phloem</li>
+                                        <li>B) Xylem</li>
+                                        <li>C) Collenchyma</li>
+                                        <li>D) Sclerenchyma</li>
+                                    </ul>
+                                    <div className="bg-white p-3 rounded-lg border border-gray-100 text-sm">
+                                        <span className="font-bold text-green-600">Answer: B</span> — Xylem transports water and minerals from the roots.
+                                    </div>
+                                </div>
+
+                                <div className="p-6 bg-gray-50 rounded-xl border border-gray-100">
+                                    <p className="font-medium text-gray-900 mb-3">Question: Which cell organelle is related to glycoprotein formation?</p>
+                                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600 mb-4">
+                                        <li>A) Golgi apparatus</li>
+                                        <li>B) Rough endoplasmic reticulum</li>
+                                        <li>C) Glyoxysome</li>
+                                        <li>D) Mitochondria</li>
+                                    </ul>
+                                    <div className="bg-white p-3 rounded-lg border border-gray-100 text-sm">
+                                        <span className="font-bold text-green-600">Answer: A</span> — The Golgi apparatus is involved in the formation of glycoproteins.
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="mt-16 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-center gap-12 text-center text-gray-500">
