@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   description: "The ultimate platform for NEET medical entrance exam preparation. Practice questions, take quizzes, and track your progress.",
   manifest: "/manifest.json",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://medcrack.in"),
+  verification: {
+    google: "aqisQgZER-9IgvNT4zDuaNsoZH67TrgHjvImZ2Y64_8",
+  },
 };
 
 export default function RootLayout({
