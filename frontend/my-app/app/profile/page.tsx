@@ -16,7 +16,8 @@ import {
   Award,
   ChevronRight,
   LogOut,
-  Settings
+  Settings,
+  Trophy
 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -263,44 +264,94 @@ function BadgesSidebar({ data }: { data: ProfileData }) {
   )
 }
 
-function BottomTabs() {
-  const [activeTab, setActiveTab] = useState("recent")
+interface LeaderboardEntry {
+  rank: number
+  username: string
+  displayName: string
+  score: number
+  solved: number
+  accuracy: number
+  avgTime: number
+}
 
-  const tabs = [
-    { id: "recent", label: "Activity", icon: Calendar },
-    { id: "list", label: "Lists", icon: List },
-    { id: "solutions", label: "Solutions", icon: FileText },
-  ]
+function Leaderboard() {
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const data = await apiFetch<LeaderboardEntry[]>("/api/leaderboard")
+        setLeaderboard(data)
+      } catch (error) {
+        console.error("Failed to load leaderboard:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchLeaderboard()
+  }, [])
 
   return (
     <Card className="border border-gray-100 shadow-sm bg-white">
-      <div className="flex border-b border-gray-100 px-2 pt-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-all duration-200 ${activeTab === tab.id
-              ? "border-black text-black"
-              : "border-transparent text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-t-lg"
-              }`}
-          >
-            <tab.icon className="w-4 h-4" />
-            <span>{tab.label}</span>
-          </button>
-        ))}
-      </div>
-
-      <CardContent className="p-8">
-        <div className="text-center py-8">
-          <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-100">
-            <div className="text-gray-300">
-              {activeTab === 'recent' && <Calendar className="w-6 h-6" />}
-              {activeTab === 'list' && <List className="w-6 h-6" />}
-              {activeTab === 'solutions' && <FileText className="w-6 h-6" />}
-            </div>
-          </div>
-          <p className="text-gray-900 font-medium">No {activeTab} yet</p>
-          <p className="text-sm text-gray-500 mt-1">Your activity will appear here once you start using the platform.</p>
+      <CardHeader className="border-b border-gray-100 pb-4">
+        <CardTitle className="text-lg font-bold flex items-center gap-2">
+          <Trophy className="w-5 h-5 text-yellow-500" />
+          Leader Board
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="p-0">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left">
+            <thead className="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th className="px-6 py-3 font-medium">Rank</th>
+                <th className="px-6 py-3 font-medium">Student</th>
+                <th className="px-6 py-3 font-medium text-right">Score</th>
+                <th className="px-6 py-3 font-medium text-right">Solved</th>
+                <th className="px-6 py-3 font-medium text-right">Accuracy</th>
+                <th className="px-6 py-3 font-medium text-right">Avg Time</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-gray-400">Loading ranking...</td>
+                </tr>
+              ) : leaderboard.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-gray-400">No active students yet</td>
+                </tr>
+              ) : (
+                leaderboard.slice(0, 10).map((entry) => (
+                  <tr key={entry.username} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4 font-medium text-gray-900">
+                      {entry.rank === 1 && "🥇"}
+                      {entry.rank === 2 && "🥈"}
+                      {entry.rank === 3 && "🥉"}
+                      {entry.rank > 3 && `#${entry.rank}`}
+                    </td>
+                    <td className="px-6 py-4 font-medium text-gray-900">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">
+                          {entry.displayName.slice(0, 1).toUpperCase()}
+                        </div>
+                        {entry.displayName}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-right font-bold text-black">{entry.score}</td>
+                    <td className="px-6 py-4 text-right text-gray-600">{entry.solved}</td>
+                    <td className="px-6 py-4 text-right">
+                      <Badge variant="outline" className={`font-normal ${entry.accuracy >= 80 ? "bg-green-50 text-green-700 border-green-200" : "bg-gray-50 text-gray-600 border-gray-200"}`}>
+                        {entry.accuracy}%
+                      </Badge>
+                    </td>
+                    <td className="px-6 py-4 text-right text-gray-500">{entry.avgTime}s</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </CardContent>
     </Card>
@@ -364,7 +415,7 @@ export default function ProfilePage() {
           {/* Main Content */}
           <div className="lg:col-span-9 space-y-8">
             <StatsCircle data={profileData} />
-            <BottomTabs />
+            <Leaderboard />
 
             {/* Mobile-only badges section at bottom */}
             <div className="lg:hidden">
