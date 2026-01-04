@@ -99,7 +99,7 @@ export default function LandingPageContent() {
                             <Button
                                 size="lg"
                                 className="bg-black text-white hover:bg-gray-800 rounded-full px-8 h-12 text-base shadow-lg hover:shadow-xl transition-all"
-                                onClick={() => router.push("/auth?page=signup")}
+                                onClick={() => router.push("/auth?page=login")}
                             >
                                 Start Practicing Now
                                 <ArrowRight className="ml-2 h-4 w-4" />
