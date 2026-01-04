@@ -81,6 +81,26 @@ def submit_quiz(submission: QuizSubmissionRequest, db: Session = Depends(get_db)
         print(f"Error submitting quiz: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
+class LogAttemptRequest(BaseModel):
+    questionsCount: int
+
+@router.post("/quiz/log-attempt")
+def log_attempt(request: LogAttemptRequest, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    try:
+        user = db.query(Student).filter(Student.username == current_user['sub']).first()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+            
+        # Only increment the total attempts counter (acts as denominator)
+        user.noofquestioncompleted = (user.noofquestioncompleted or 0) + request.questionsCount
+        
+        db.commit()
+        return {"message": "Attempt logged"}
+    except Exception as e:
+        db.rollback()
+        print(f"Error logging attempt: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
 class ReportErrorRequest(BaseModel):
     questionId: str
     subject: str = "Unknown"

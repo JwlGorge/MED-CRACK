@@ -263,10 +263,21 @@ export default function QuizPage() {
       setFirstAttemptMistakes(initialMistakes);
     }
 
+    // If there are incorrect answers, block submission but log the attempt (for acceptance ratio)
     if (results.some((a) => !a.isCorrect)) {
       setUserAnswers(results)
       setShowIncorrectFeedback(true)
       setIsSubmitting(false)
+
+      // Log the failed attempt to backend to increment total submissions count
+      const token = localStorage.getItem("token")
+      if (token) {
+        apiFetch("/api/quiz/log-attempt", {
+          method: "POST",
+          body: JSON.stringify({ questionsCount: quiz.questions.length })
+        }).catch(err => console.error("Failed to log attempt:", err))
+      }
+
       return
     }
 
