@@ -15,6 +15,8 @@ RUN chmod -R +x node_modules/.bin
 COPY . .
 
 # Build the Next.js application
+ARG NEXT_PUBLIC_BACKEND_URL
+ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
 RUN npm run build
 
 # Stage 2: Run the application

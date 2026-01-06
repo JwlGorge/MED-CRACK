@@ -1,0 +1,11 @@
+tunnel: medcrack
+credentials-file: /home/jwl/MED-CRACKER/.cloudflared/4b00fc8b-76bc-431d-b10e-bb8f1f95741a.json
+
+ingress:
+  - hostname: medcrack.in
+    service: http://localhost:3000
+
+  - hostname: api.medcrack.in
+    service: http://localhost:8000
+
+  - service: http_status:404
