@@ -8,19 +8,19 @@ const nextConfig = {
     return [
       {
         source: "/questions/:path*",      // Example: /questions/Biology
-        destination: "http://localhost:8000/questions/Biology", // FastAPI backend
+        destination: `${process.env.BACKEND_URL || "http://localhost:8000"}/questions/:path*`,
       },
       {
         source: "/login",                 // Example: /login
-        destination: "http://localhost:8000/login",
+        destination: `${process.env.BACKEND_URL || "http://localhost:8000"}/login`,
       },
       {
         source: "/signup",                // Example: /signup
-        destination: "http://localhost:8000/signup",
+        destination: `${process.env.BACKEND_URL || "http://localhost:8000"}/signup`,
       },
       {
         source: "/api/:path*",            // Example: /api/submit-quiz
-        destination: "http://localhost:8000/api/:path*",
+        destination: `${process.env.BACKEND_URL || "http://localhost:8000"}/api/:path*`,
       },
     ];
   },

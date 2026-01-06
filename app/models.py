@@ -111,4 +111,5 @@ class Weakarea(Base):
     id=Column(Integer,primary_key=True,autoincrement=True)
     user_id=Column(Integer)
     subject=Column(Text)
-    question_id=Column(Integer)
+    question_id=Column(Integer) #multiple questionsids after each quiz in one column
+    
