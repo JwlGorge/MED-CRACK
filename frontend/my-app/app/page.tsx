@@ -2,28 +2,47 @@ import type { Metadata } from "next";
 import LandingPageContent from "@/components/landing-page-content";
 
 export const metadata: Metadata = {
-  title: "NEET, JEE & KEAM Prep | Free Mock Tests & Previous Year Questions",
-  description: "The #1 Platform for Medical & Engineering Entrance Exams. Practice 50,000+ Questions for NEET, JEE Main, KEAM. Featuring AI-generated questions and personalized weak area detection.",
+  title: "Free NEET & JEE Practice | Class 11 & 12 CBSE & State Board | MedCrack",
+  description: "The #1 Free Platform for NEET, JEE & Medical Entrance Prep. Practice 50,000+ Questions for Class 11 & 12 Physics, Chemistry, Biology. CBSE & State Board Syllabus. AI-Generated Quizzes, Mock Tests & Previous Year Papers.",
+
   keywords: [
-    "medcrack", "neet questions", "neet physics question", "neet chemistry questions",
-    "neet msqs", "neet practice questions", "AI NEET questions", "personalized neet prep",
-    "weak area detection", "adaptive practice", "NEET", "NEET 2026", "JEE Main", "KEAM",
-    "Medical Entrance Exam", "Engineering Entrance", "Class 11 Physics Questions",
-    "Class 12 Biology", "NEET Mock Test Free", "Previous Year Question Papers",
-    "Biology MCQs", "Physics Formulae", "Competitive Exam Preparation"
+    // Core Exams
+    "NEET", "JEE", "JEE Main", "KEAM", "Medical Entrance", "Medical Entrence", "Engineering Entrance",
+
+    // Classes & Boards
+    "Class 11", "Class 12", "CBSE", "State Board", "NCERT",
+
+    // Practice & Content Types
+    "Practice", "Quiz", "Free", "Mock Test", "Previous Year Questions", "PYQ", "MCQs",
+    "NEET Practice Quiz Free", "Daily Practice Problems", "DPP",
+
+    // Subjects
+    "Physics", "Chemistry", "Biology", "Botany", "Zoology",
+
+    // Specific Long-tail
+    "neet physics question", "neet chemistry questions", "neet biology questions",
+    "neet msqs", "AI NEET questions", "personalized neet prep",
+    "weak area detection", "adaptive practice",
+
+    // Brand
+    "medcrack", "Med-Cracker"
   ],
+
   openGraph: {
-    title: "Master NEET & JEE: Free Practice Platform",
-    description: "Crack your entrance exams with our data-driven practice platform. Thousands of free questions for NEET, KEAM, and JEE aspirants.",
+    title: "Free NEET & JEE Practice | Class 11 & 12 | MedCrack",
+    description: "Unlock your potential with MedCrack's AI-driven practice platform. Free Mock Tests, Infinite Quizzes, and Personalized Analytics for NEET, JEE & Board Exams.",
     type: "website",
     locale: "en_IN",
-    siteName: "MedCrack"
+    siteName: "MedCrack",
+    url: "https://medcrack.in",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "MedCrack | Crack NEET & JEE",
-    description: "Free daily practice for Medical and Engineering entrance exams.",
+    title: "MedCrack | #1 Free NEET & JEE Prep",
+    description: "Ace your Medical & Engineering Exams with Free Daily Quizzes, AI Feedback & Weak Area Detection.",
   },
+
   robots: {
     index: true,
     follow: true,
@@ -35,16 +54,33 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+
+  alternates: {
+    canonical: "https://medcrack.in",
+  },
 };
 
 export default function LandingPage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
+    "@type": "Educationalapplication",
     "name": "MedCrack",
     "alternateName": "Med-Cracker",
     "url": "https://medcrack.in",
-    "description": "Premium NEET preparation platform with thousands of practice questions.",
+    "description": "Premium AI-powered NEET & JEE preparation platform. Practice unlimited questions for free.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR",
+      "category": "Free"
+    },
+    "audience": {
+      "@type": "EducationalAudience",
+      "educationalRole": "student",
+      "audienceType": "Medical Aspirants"
+    },
     "sameAs": [
       "https://twitter.com/medcracker",
       "https://instagram.com/medcracker"

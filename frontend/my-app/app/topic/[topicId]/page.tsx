@@ -14,14 +14,32 @@ export async function generateMetadata(
   const title = topicId.charAt(0).toUpperCase() + topicId.slice(1);
 
   return {
-    title: `${title} Questions for NEET | Med-Cracker`,
-    description: `Practice top-tier ${title} questions for the NEET medical entrance exam. Free quizzes, progress tracking, and detailed solutions.`,
+    title: `${title} Practice Questions | Free NEET & JEE Quiz | Class 11 & 12 Important MCQs`,
+    description: `Free ${title} practice questions and quizzes for NEET, JEE & Medical Entrance. Chapter-wise important questions for Class 11 & 12 CBSE & State Board. AI-powered mock tests.`,
+    keywords: [
+      title,
+      `${title} neet questions`,
+      `${title} mcq`,
+      `${title} class 11`,
+      `${title} class 12`,
+      `${title} jee questions`,
+      "neet practice",
+      "free quiz",
+      "medical entrance"
+    ],
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://medcrack.in'}/topic/${topicId}`,
     },
     openGraph: {
-      title: `${title} Practice Questions | Med-Cracker`,
-      description: `Attempt ${title} quizzes designed for NEET aspirants.`,
+      title: `${title} Practice Questions | Free NEET & JEE Quiz`,
+      description: `Attempt ${title} quizzes designed for NEET & JEE aspirants. Free and AI-powered.`,
+      type: "website",
+      url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://medcrack.in'}/topic/${topicId}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} Practice Questions | MedCrack`,
+      description: `Master ${title} for NEET & JEE with MedCrack's free quizzes.`,
     },
   }
 }

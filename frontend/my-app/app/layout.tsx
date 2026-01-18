@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Med-Cracker",
-    default: "Med-Cracker | NEET Preparation Platform",
+    template: "%s | MedCrack",
+    default: "MedCrack | Free NEET & JEE Practice Platform",
   },
   description: "The ultimate platform for NEET medical entrance exam preparation. Practice questions, take quizzes, and track your progress.",
   manifest: "/manifest.json",

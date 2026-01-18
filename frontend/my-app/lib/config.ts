@@ -1,1 +1,1 @@
-export const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+export const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://med-crack.onrender.com";

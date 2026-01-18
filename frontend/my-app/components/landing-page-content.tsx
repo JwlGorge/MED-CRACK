@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { ArrowRight, BookOpen, CheckCircle, Users, Zap } from "lucide-react"
+import { API_URL } from "@/lib/config"
 
 // Types for API responses
 interface SubjectStat {
@@ -21,7 +22,7 @@ export default function LandingPageContent() {
         // Fetch subject stats and active users from backend
         const fetchStats = async () => {
             try {
-                const res = await fetch("http://localhost:8000/api/stats")
+                const res = await fetch(`${API_URL}/api/stats`)
                 const data = await res.json()
                 setSubjectStats(data.subjectStats)
                 setTotalQuestions(data.totalQuestions)

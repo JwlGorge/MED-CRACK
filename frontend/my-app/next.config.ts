@@ -8,19 +8,19 @@ const nextConfig = {
     return [
       {
         source: "/questions/:path*",      // Example: /questions/Biology
-        destination: `${process.env.BACKEND_URL || "http://localhost:8000"}/questions/:path*`,
+        destination: `${process.env.BACKEND_URL || "https://med-crack.onrender.com"}/questions/:path*`,
       },
       {
         source: "/login",                 // Example: /login
-        destination: `${process.env.BACKEND_URL || "http://localhost:8000"}/login`,
+        destination: `${process.env.BACKEND_URL || "https://med-crack.onrender.com"}/login`,
       },
       {
         source: "/signup",                // Example: /signup
-        destination: `${process.env.BACKEND_URL || "http://localhost:8000"}/signup`,
+        destination: `${process.env.BACKEND_URL || "https://med-crack.onrender.com"}/signup`,
       },
       {
         source: "/api/:path*",            // Example: /api/submit-quiz
-        destination: `${process.env.BACKEND_URL || "http://localhost:8000"}/api/:path*`,
+        destination: `${process.env.BACKEND_URL || "https://med-crack.onrender.com"}/api/:path*`,
       },
     ];
   },
